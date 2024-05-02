@@ -3,3 +3,7 @@
 # react-router-dom
 
 라우팅을 위해 설치
+
+# @emotion/styled
+
+스타일 컴포넌트 생성용
