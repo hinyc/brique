@@ -11,6 +11,12 @@ export const simpleRequest = async (value: string) => {
     })
     .then((response) => {
       return response.data;
+    })
+    .catch((error) => {
+      return {
+        status: error.message === 'Network Error' ? 500 : error.response.status,
+        message: error.message,
+      };
     });
 
   return result;
