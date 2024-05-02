@@ -45,6 +45,9 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+button:active {
+  transform: scale(0.95);
+}
 button:hover {
   border-color: #646cff;
 }

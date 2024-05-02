@@ -60,7 +60,7 @@ export default function Problem1() {
   return (
     <>
       <Problem1Style>
-        <h2>문제 1</h2>
+        <h2>문제 1, csv 파일읽기</h2>
         {/* <ProblemBox /> */}
 
         <div className="selectFile">
