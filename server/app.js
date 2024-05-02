@@ -102,7 +102,11 @@ app.get('/employees', (req, res) => {
     Promise.all(promises)
       .then((resultsWithAddData) => {
         // console.log('resultsWithAddData:', resultsWithAddData);
-        res.send(JSON.stringify(resultsWithAddData));
+        //이름순으로 정렬
+        const sortResult = resultsWithAddData.sort((a, b) => {
+          return a.first_name.localeCompare(b.first_name);
+        });
+        res.send(JSON.stringify(sortResult));
       })
       .catch((error) => {
         console.error('Error:', error);
