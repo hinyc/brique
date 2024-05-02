@@ -1,15 +1,13 @@
 import axios from 'axios';
 
-export const simpleRequest = async (value: string) => {
+export const requestEmployees = async () => {
   const api = `${import.meta.env.VITE_API_URL}/employees`;
 
   const result = await axios
-    .get(api, {
-      params: {
-        text: value.length === 0 ? 'Ping' : value,
-      },
-    })
+    .get(api)
     .then((response) => {
+      console.log('response');
+      console.log(response);
       return response.data;
     })
     .catch((error) => {

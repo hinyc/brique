@@ -48,13 +48,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/employees', (req, res) => {
+  console.log('employees');
   connection.query('SELECT * FROM employees', (error, results) => {
     if (error) {
       console.error('Error:', error);
       res.status(500).send('Internal Server Error');
       return;
     }
-    res.send(results);
+    console.log('results:', results[0]);
+    res.send(JSON.stringify(results[0]));
   });
 });
 
