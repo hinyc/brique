@@ -1,5 +1,3 @@
-const { connection } = require('../db');
-
 const getPingPong = (req, res) => {
   const timeout = setTimeout(() => {
     if (req.query.text === 'Ping') {

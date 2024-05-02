@@ -4,7 +4,7 @@ require('dotenv').config();
 
 //mariaDB
 const mysql = require('mysql2');
-const { getPingPong, getEmployees } = require('./controller');
+const { getPingPong } = require('./controller');
 
 const app = express();
 const port = 3000;
@@ -48,11 +48,10 @@ app.get('/employees', (req, res) => {
       return;
     }
 
-    console.log('results:', results);
     //병령 비동기 실행
     const promises = results.map((result) => {
       return new Promise((resolve, reject) => {
-        // emp_no를 사용하여 titles 테이블에서 title가좀
+        //emp_no를 가지고 titles 테이블에서 title을 가져온다.
         connection.query('SELECT title FROM titles WHERE emp_no = ?', [result.emp_no], (error, titleResults) => {
           if (error) {
             return reject(error);
@@ -60,6 +59,20 @@ app.get('/employees', (req, res) => {
 
           // title 추가
           result.title = titleResults[0].title;
+
+          // resolve(result);
+        });
+
+        //todo emp_no를 가지고 salaries 테이블에서 max_salary를 가져온다.
+        connection.query('SELECT MAX(salary) FROM salaries WHERE emp_no = ?', [result.emp_no], (error, salaryResults) => {
+          if (error) {
+            return reject(error);
+          }
+
+          // max_salary 추가
+          result.max_salary = salaryResults[0]['MAX(salary)'];
+
+          // console.log('salaryResults:', result);
           resolve(result);
         });
       });
@@ -89,7 +102,6 @@ app.get('/employees', (req, res) => {
 //필요 max_salary 최대급여
 //  birth_date: 생일 , 불필요
 
-//todo emp_no를 가지고 titles 테이블에서 title을 가져온다.
 //todo emp_no를 가지고 salaries 테이블에서 max_salary를 가져온다.
 //todo emp_no를 가지고 dept_emp 테이블에서 dept_no를 가져온다. -> dept_no를 가지고 dept_name을 가져온다.
 
