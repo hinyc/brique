@@ -42,7 +42,7 @@ export const lineCalculator = (data: string[]) => {
 
   //중간값, 총 10개의 값중 5,6번째 값의 평균
   const sorted = line.sort((a, b) => a - b);
-  const median = (sorted[4] + sorted[5]) / 2;
+  const median = round((sorted[4] + sorted[5]) / 2);
 
   return {
     min,
