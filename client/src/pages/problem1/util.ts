@@ -6,13 +6,25 @@ export const lineCalculator = (data: string) => {
   //표준편차
   //중간값
 
+  //틀린 값 배열
+  const error: string[] = [];
+
   const line: number[] = data.split(',').map((item) => {
     //Number이 NaN을 전체 함수를 종료함
-    return Number(item);
+    const number = Number(item);
+
+    if (isNaN(number)) {
+      error.push(item);
+      return NaN;
+    }
+
+    return number;
   });
 
-  //숫자가아닌값이 존재할경우 return 값 없음
-  if (line.includes(NaN)) return;
+  //숫자가아닌값이 존재할경우 error 배열 return
+  if (line.includes(NaN)) {
+    return { error };
+  }
 
   //모두 소수점 첫째자리까지 표시
 
