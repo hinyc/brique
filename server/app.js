@@ -101,7 +101,7 @@ app.get('/employees', (req, res) => {
 
     Promise.all(promises)
       .then((resultsWithAddData) => {
-        console.log('resultsWithAddData:', resultsWithAddData);
+        // console.log('resultsWithAddData:', resultsWithAddData);
         res.send(JSON.stringify(resultsWithAddData));
       })
       .catch((error) => {
