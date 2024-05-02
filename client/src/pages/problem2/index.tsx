@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { simpleRequest } from './request';
+import Box from './components/Box';
 
 export default function Problem2() {
   const [inputValue, setInputValue] = useState('');
@@ -19,7 +20,6 @@ export default function Problem2() {
 
     const result = await simpleRequest(inputValue);
 
-    console.log(result);
     if (result.status === 500) {
       return setIsNetworkError(true);
     }
@@ -58,27 +58,8 @@ export default function Problem2() {
         </div>
       </div>
       <div className="request__response">
-        <div className="box request">
-          <h4>요청</h4>
-
-          <div className="list">
-            {requestList.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
-          </div>
-        </div>
-
-        <div className="box response">
-          <h4>응답</h4>
-
-          <div className="dummy__box"></div>
-
-          <div className="list">
-            {responseList.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
-          </div>
-        </div>
+        <Box title="요청" list={requestList} />
+        <Box title="응답" list={responseList} />
       </div>
     </Problem2Style>
   );
@@ -121,18 +102,5 @@ const Problem2Style = styled.div`
   .request__response {
     display: flex;
     gap: 20px;
-    .box {
-      width: 250px;
-      padding: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-      .list {
-        margin-top: 8px;
-        border-top: 1px solid lightgray;
-        min-height: 200px;
-        max-height: calc(100vh - 350px);
-        overflow: auto;
-      }
-    }
   }
 `;
