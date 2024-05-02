@@ -16,7 +16,7 @@ export default function Problem2() {
     }
 
     const result = await simpleRequest(inputValue);
-    setResponseList([...responseList, result]);
+    setResponseList((state) => [...state, result]);
   };
 
   const _onClickReset = () => {
