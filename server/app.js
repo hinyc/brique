@@ -83,30 +83,46 @@ app.get('/employees', (req, res) => {
           // console.log(deptResults);
 
           //dept_no 2개인 경우가 있으니 미리 빈배열 할당
+          result.dept_no = deptResults;
           result.dept_name = [];
 
-          deptResults.forEach((deptResult) => {
-            connection.query('SELECT dept_name FROM departments WHERE dept_no = ?', [deptResult.dept_no], (error, nameResults) => {
-              if (error) {
-                return reject(error);
-              }
-              // dept_name 추가
-              result.dept_name.push(nameResults[0].dept_name);
-              resolve(result);
+          // dept_no로 정렬 (실행 예 참고)
+          deptResults
+            .sort((a, b) => b.dept_no.slice(1) - a.dept_no.slice(1))
+            .forEach((deptResult) => {
+              connection.query('SELECT dept_name FROM departments WHERE dept_no = ?', [deptResult.dept_no], (error, nameResults) => {
+                if (error) {
+                  return reject(error);
+                }
+                // dept_name 추가
+                result.dept_name.push(nameResults[0].dept_name);
+                resolve(result);
+              });
             });
-          });
         });
       });
     });
 
     Promise.all(promises)
       .then((resultsWithAddData) => {
-        // console.log('resultsWithAddData:', resultsWithAddData);
         //이름순으로 정렬
         const sortResult = resultsWithAddData.sort((a, b) => {
           return a.first_name.localeCompare(b.first_name);
         });
-        res.send(JSON.stringify(sortResult));
+
+        //부서가 2개인 경우를 처리
+        const divDeptResult = [];
+        sortResult.map((employee) => {
+          if (employee.dept_name.length > 1) {
+            return employee.dept_name.map((dept_name) => {
+              const newEmployee = { ...employee, dept_name: [dept_name] };
+              return divDeptResult.push(newEmployee);
+            });
+          }
+          return divDeptResult.push(employee);
+        });
+
+        res.send(JSON.stringify(divDeptResult));
       })
       .catch((error) => {
         console.error('Error:', error);

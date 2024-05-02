@@ -6,8 +6,6 @@ export const requestEmployees = async () => {
   const result = await axios
     .get(api)
     .then((response) => {
-      console.log('response');
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
