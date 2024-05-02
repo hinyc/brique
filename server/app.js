@@ -48,10 +48,10 @@ app.get('/employees', (req, res) => {
       return;
     }
 
-    //병령 비동기 실행
+    //병렬 비동기 실행 emp_no가지고 데이터를 추가시킨다.
     const promises = results.map((result) => {
       return new Promise((resolve, reject) => {
-        //emp_no를 가지고 titles 테이블에서 title을 가져온다.
+        //todo emp_no를 가지고 titles 테이블에서 title을 가져온다.
         connection.query('SELECT title FROM titles WHERE emp_no = ?', [result.emp_no], (error, titleResults) => {
           if (error) {
             return reject(error);
@@ -59,8 +59,6 @@ app.get('/employees', (req, res) => {
 
           // title 추가
           result.title = titleResults[0].title;
-
-          // resolve(result);
         });
 
         //todo emp_no를 가지고 salaries 테이블에서 max_salary를 가져온다.
@@ -73,15 +71,38 @@ app.get('/employees', (req, res) => {
           result.max_salary = salaryResults[0]['MAX(salary)'];
 
           // console.log('salaryResults:', result);
-          resolve(result);
+          // resolve(result);
+        });
+
+        //todo emp_no를 가지고 dept_emp 테이블에서 dept_no를 가져온다. -> dept_no를 가지고 dept_name을 가져온다.
+        connection.query('SELECT dept_no FROM dept_emp WHERE emp_no = ?', [result.emp_no], (error, deptResults) => {
+          if (error) {
+            return reject(error);
+          }
+
+          // console.log(deptResults);
+
+          //dept_no 2개인 경우가 있으니 미리 빈배열 할당
+          result.dept_name = [];
+
+          deptResults.forEach((deptResult) => {
+            connection.query('SELECT dept_name FROM departments WHERE dept_no = ?', [deptResult.dept_no], (error, nameResults) => {
+              if (error) {
+                return reject(error);
+              }
+              // dept_name 추가
+              result.dept_name.push(nameResults[0].dept_name);
+              resolve(result);
+            });
+          });
         });
       });
     });
 
     Promise.all(promises)
-      .then((resultsWithTitles) => {
-        console.log('resultsWithTitles:', resultsWithTitles);
-        res.send(JSON.stringify(resultsWithTitles));
+      .then((resultsWithAddData) => {
+        console.log('resultsWithAddData:', resultsWithAddData);
+        res.send(JSON.stringify(resultsWithAddData));
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -101,9 +122,6 @@ app.get('/employees', (req, res) => {
 //필요 title 직급
 //필요 max_salary 최대급여
 //  birth_date: 생일 , 불필요
-
-//todo emp_no를 가지고 salaries 테이블에서 max_salary를 가져온다.
-//todo emp_no를 가지고 dept_emp 테이블에서 dept_no를 가져온다. -> dept_no를 가지고 dept_name을 가져온다.
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
