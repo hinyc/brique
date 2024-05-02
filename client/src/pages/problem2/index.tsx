@@ -15,7 +15,10 @@ export default function Problem2() {
       setRequestList([...requestList, inputValue]);
     }
 
+    setInputValue('');
+
     const result = await simpleRequest(inputValue);
+
     setResponseList((state) => [...state, result]);
   };
 
