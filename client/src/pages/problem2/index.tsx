@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import { simpleRequest } from './request';
 
 export default function Problem2() {
   const [inputValue, setInputValue] = useState('');
@@ -7,12 +8,15 @@ export default function Problem2() {
   const [requestList, setRequestList] = useState<string[]>([]);
   const [responseList, setResponseList] = useState<string[]>([]);
 
-  const _onClickRequest = () => {
+  const _onClickRequest = async () => {
     if (inputValue.length < 1) {
-      return setRequestList([...requestList, 'Ping']);
+      setRequestList([...requestList, 'Ping']);
+    } else {
+      setRequestList([...requestList, inputValue]);
     }
 
-    setRequestList([...requestList, inputValue]);
+    const result = await simpleRequest(inputValue);
+    setResponseList([...responseList, result]);
   };
 
   const _onClickReset = () => {
@@ -20,7 +24,8 @@ export default function Problem2() {
     setRequestList([]);
     setResponseList([]);
   };
-  console.log('requestList', requestList);
+  // console.log('requestList', requestList);
+  // console.log('responseList', responseList);
   return (
     <Problem2Style>
       <h2>문제 2, Ping-Pong</h2>
