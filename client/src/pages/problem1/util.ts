@@ -1,4 +1,4 @@
-export const lineCalculator = (data: string) => {
+export const lineCalculator = (data: string[]) => {
   //최소값
   //최대값
   //합계
@@ -9,12 +9,12 @@ export const lineCalculator = (data: string) => {
   //틀린 값 배열
   const error: string[] = [];
 
-  const line: number[] = data.split(',').map((item) => {
+  const line: number[] = data.map((item) => {
     //Number이 NaN을 전체 함수를 종료함
     const number = Number(item);
 
     if (isNaN(number)) {
-      error.push(item);
+      error.push(item.replace(/"/g, ''));
       return NaN;
     }
 

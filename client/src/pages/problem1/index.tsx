@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
-import ProblemBox from '../../components/ProblemBox';
+// import ProblemBox from '../../components/ProblemBox';
 import styled from '@emotion/styled';
-
-import Viewer from './viewer';
+import { Viewer } from './components/viewer';
+import { lineCalculator } from './util';
+import PageNation from './components/pagenation';
 
 export default function Problem1() {
-  const [csvData, setCsvData] = useState<string[]>([]);
+  const [csvData, setCsvData] = useState<string[][]>([]);
+  const [errorValues, setErrorValues] = useState<string[]>([]);
+  const [calculatedLines, setCalculatedLines] = useState(0);
+  const [range, setRange] = useState({ start: 0, end: 100 });
   // const [isLoading, setIsLoading] = useState(false);
   // const [calculatedLine, setCalculatedLine] = useState(0);
   //csv데이터 확인
+
   const _onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     // setIsLoading(true);
@@ -26,37 +31,70 @@ export default function Problem1() {
 
     //비교적 간결하게 csv 데이터 확인이 가능함
     const data = await file.text();
-    const result = data.split('\r\n');
-    console.log('onchange');
-    setCsvData(result);
-    // setCalculatedLine(result.length);
+    const result = data.split('\r\n').map((item) => {
+      return item.split(',');
+    });
+
+    //첫번째 배열은 데이터가 아니라 제외
+    //마지막 배열은 공백이라 제외
+    setCsvData(result.slice(1, -1));
   };
 
   useEffect(() => {
-    // setIsLoading(false);
-    console.log('endEffect');
+    const errorValues: string[] = [];
+    let calculatedLine = csvData.length;
+
+    csvData.forEach((data) => {
+      const calc = lineCalculator(data);
+
+      if (calc.error) {
+        errorValues.push(...calc.error);
+        calculatedLine--;
+      }
+    });
+
+    setErrorValues(errorValues);
+    setCalculatedLines(calculatedLine);
   }, [csvData]);
+
   return (
     <>
       <Problem1Style>
-        <h1>문제 1</h1>
-        <ProblemBox />
+        <h2>문제 1</h2>
+        {/* <ProblemBox /> */}
 
         <div className="selectFile">
-          <h4>파일 선택 영역</h4>
           <input type="file" onChange={_onChange} />
         </div>
 
-        <Viewer csvData={csvData} />
+        {csvData.length > 0 && (
+          <>
+            <Viewer csvData={csvData} range={range} />
 
-        <div className="calculate">
-          계산결과
-          <div>The total number of lines: {csvData.length}</div>
-          <div>The calculated lines: {0}</div>
-          <div>The error values:</div>
-        </div>
+            <PageNation //
+              size={10000}
+              setRange={setRange}
+              totalItems={csvData.length}
+            />
+
+            <div className="calculate">
+              <h3>계산결과</h3>
+              <div>
+                <div className="items">
+                  <span>The total number of lines:</span>
+                  <span>The number of lines calculated:</span>
+                  <span>The number of error lines: </span>
+                </div>
+                <div className="values">
+                  <span> {csvData.length.toLocaleString()}</span>
+                  <span> {calculatedLines.toLocaleString()}</span>
+                  <span>{errorValues}</span>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </Problem1Style>
-      ;
     </>
   );
 }
@@ -64,6 +102,42 @@ export default function Problem1() {
 const Problem1Style = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   .selectFile {
+    width: 120px;
+    input {
+      margin: auto;
+    }
+  }
+  .calculate {
+    border-top: 2px dashed lightgray;
+    margin-top: 20px;
+    div {
+      margin: 0 auto;
+      width: 400px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      .items,
+      .values {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .items {
+        align-items: flex-end;
+      }
+
+      .values {
+        margin-left: 8px;
+        align-items: flex-start;
+        span {
+          :last-of-type {
+            font-weight: 700;
+            color: #284da7;
+          }
+        }
+      }
+    }
   }
 `;
