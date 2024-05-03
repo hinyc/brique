@@ -18,7 +18,7 @@ export default function Chart() {
     <>
       <LineChart
         width={500}
-        height={300}
+        height={320}
         data={chartData}
         margin={{
           top: 15
@@ -32,7 +32,8 @@ export default function Chart() {
             value: '평균 기온( ℃ )',
             angle: -90,
             position: 'insideLeft',
-            offset: 20
+            offset: 20,
+            style: { fontWeight: 'bold' }
           }}
         />
         <YAxis
@@ -41,14 +42,19 @@ export default function Chart() {
           domain={humidityRage}
           label={{
             value: '평균 습도( % )',
-            angle: -90,
+            angle: 90,
             position: 'insideRight',
-            offset: 20
+            offset: 20,
+            style: { fontWeight: 'bold' }
           }}
         />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         <Tooltip />
-        <Legend align="center" verticalAlign="top" />
+        <Legend
+          align="left"
+          verticalAlign="top"
+          wrapperStyle={{ padding: '0 0 14px 60px' }}
+        />
         <Line
           yAxisId="left"
           type="monotone"

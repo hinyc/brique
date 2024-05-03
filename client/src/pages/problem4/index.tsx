@@ -11,9 +11,7 @@ export default function Problem4() {
       <p>
         차트만들기 + 랜덤버튼
         <br />
-        <strong>
-          random 버튼 생성 데이터 범위는 온도 0~40 (℃), 습도 20~100(%)
-        </strong>
+        <strong> 입력 가능 데이터 범위는 온도 0~40 (℃), 습도 20~100(%)</strong>
       </p>
       {/* random data 범위는 온도 0~40, 습도 20~100 */}
       <button onClick={setChartDataRandom}>random</button>
