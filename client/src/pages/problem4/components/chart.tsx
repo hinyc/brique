@@ -7,24 +7,18 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import useStore4 from '../store';
 
-export type ChartDataType = {
-  //월, 평균기온, 평균습도
-  month: string;
-  temperature: number;
-  humidity: number;
-};
+export default function Chart() {
+  const { chartData } = useStore4();
 
-interface ChartProps {
-  data: ChartDataType[];
-}
+  const keys = Object.keys(chartData[0]);
 
-export default function Chart(props: ChartProps) {
-  console.log(Object.keys(props.data[0]));
-  const keys = Object.keys(props.data[0]);
+  console.log(keys);
+  console.log(chartData);
   return (
     <>
-      <LineChart width={500} height={300} data={props.data}>
+      <LineChart width={500} height={300} data={chartData}>
         <XAxis dataKey={keys[0]} />
         <YAxis
           yAxisId="left"
