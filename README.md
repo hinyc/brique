@@ -1,7 +1,7 @@
 ## 프로젝트 실행
 node v20.9.0 / npm v10.6.0
 
-### sever
+### Sever
 - npm install
 - .env 환경변수 추가
 (MariaDB 사용시 필요)
