@@ -28,6 +28,8 @@ export default function Problem4() {
 const Problem4Style = styled.div`
   .table__chart {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 40px;
   }
 `;
