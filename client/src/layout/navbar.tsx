@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
@@ -17,8 +17,11 @@ export default function Navbar() {
 
 const NavBarStyle = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 24px;
   margin-bottom: 20px;
+  width: 650px;
   a {
     padding: 4px 16px;
     color: #000;

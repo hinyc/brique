@@ -20,8 +20,11 @@ export default function Problem5() {
   const [randomResponseList, setRandomResponseList] = useState<
     RandomResponse[]
   >([]);
-
   const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const limitCall = 100;
+  const intervalTime = 30;
 
   const callGetRandomResponse = (interval: number) => {
     getRandomResponse().then((response) => {
@@ -48,8 +51,9 @@ export default function Problem5() {
 
         setTotal((prev) => {
           //실행 횟수
-          if (prev + 1 === 100) {
+          if (prev + 1 >= limitCall) {
             clearInterval(interval);
+            setIsLoading(false);
           }
 
           return prev + 1;
@@ -59,35 +63,61 @@ export default function Problem5() {
   };
 
   const _onClickGetRandomResponse = () => {
+    if (isLoading) return;
+
+    if (total >= limitCall) {
+      setRandomResponseList([]);
+      setTotal(0);
+      return;
+    }
+
+    setIsLoading(true);
     const interval = setInterval(() => {
       callGetRandomResponse(interval);
-    }, 30);
+    }, intervalTime);
   };
 
   return (
     <Problem5Style>
       <h2>Problem5</h2>
 
-      <button onClick={_onClickGetRandomResponse}>GetRandomResponse</button>
+      <button disabled={isLoading} onClick={_onClickGetRandomResponse}>
+        {total >= limitCall ? 'Reset' : 'GetRandomResponse'}
+      </button>
+      <div className="total">
+        {isLoading && <span> Loading...</span>}
+        {total >= limitCall && (
+          <>
+            <span>Total count: </span>
+            <span>{total}</span>
+          </>
+        )}
+      </div>
 
       <div className="list">
+        {randomResponseList.length === 0 && (
+          <div className="empty">데이터가 없습니다.</div>
+        )}
         {randomResponseList.map((item) => (
-          <div key={item.id}>
-            <span>count: {item.count}</span>{' '}
+          <div className="item" key={item.id}>
+            <span className="count">count: {item.count}</span>{' '}
             <span>{JSON.stringify(item.data)} </span>
           </div>
         ))}
-      </div>
-
-      <div>
-        <span>total count: </span>
-        <span>{total}</span>
       </div>
     </Problem5Style>
   );
 }
 
 const Problem5Style = styled.div`
+  button {
+    width: 160px;
+  }
+  .total {
+    font-weight: 700;
+    height: 20px;
+    text-align: left;
+  }
   .list {
     height: 216px;
     margin-top: 20px;
@@ -96,6 +126,18 @@ const Problem5Style = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     div {
       text-align: left;
+    }
+    .item {
+      display: flex;
+      .count {
+        display: block;
+        width: 60px;
+      }
+    }
+
+    .empty {
+      margin-top: 100px;
+      text-align: center;
     }
   }
 `;
