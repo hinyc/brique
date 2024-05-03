@@ -122,15 +122,20 @@ export default function Problem5() {
 }
 
 const Problem5Style = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   button {
     width: 160px;
   }
   .total {
+    width: 650px;
     font-weight: 700;
     height: 20px;
     text-align: left;
   }
   .list {
+    width: 650px;
     height: 216px;
     margin-top: 20px;
     padding: 16px;

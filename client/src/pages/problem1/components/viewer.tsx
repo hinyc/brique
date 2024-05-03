@@ -1,5 +1,5 @@
-import { lineCalculator } from "../util";
-import styled from "@emotion/styled";
+import { lineCalculator } from '../util';
+import styled from '@emotion/styled';
 
 interface ViewerProps {
   range: { start: number; end: number };
@@ -24,9 +24,6 @@ export const Viewer = (props: ViewerProps) => {
         {props.csvData
           .slice(props.range.start, props.range.end)
           .map((data, index) => {
-            {
-              /* {props.csvData.map((data, index) => { */
-            }
             const calc = lineCalculator(data);
 
             if (calc.error) {
@@ -50,16 +47,16 @@ export const Viewer = (props: ViewerProps) => {
 };
 
 export const ViewerStyle = styled.div`
+  width: 600px;
   margin-top: 20px;
   padding: 16px;
-  max-height: calc(100vh - 450px);
+  max-height: calc(100vh - 500px);
   border-radius: 8px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   /* max-height: 200px; */
   .list {
-    background-color: red;
     overflow: auto;
-    max-height: calc(100vh - 500px);
+    max-height: calc(100vh - 530px);
   }
   .group {
     width: 100%;

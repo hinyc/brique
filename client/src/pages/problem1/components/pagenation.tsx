@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import React, { useCallback, useEffect, useState } from "react";
+import styled from '@emotion/styled';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface PageNationProps {
   size: number;
@@ -13,13 +13,13 @@ export default function PageNation(props: PageNationProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Array.from(
     { length: Math.ceil(props.totalItems / props.size) },
-    (_, i) => i + 1,
+    (_, i) => i + 1
   );
 
   const pageChanger = useCallback((page: number) => {
     props.setRange({
       start: (page - 1) * props.size,
-      end: page * props.size,
+      end: page * props.size
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -45,7 +45,8 @@ export default function PageNation(props: PageNationProps) {
 }
 
 const PageNationStyle = styled.div`
-  max-width: 400px;
+  width: 600px;
+  max-width: 600px;
   .pages {
     padding: 10px 0;
     display: flex;
@@ -57,6 +58,13 @@ const PageNationStyle = styled.div`
       align-items: center;
       padding: 0;
       margin: 0 4px;
+      transition: 0.1s;
+      :hover {
+        transform: scale(1.2);
+      }
+      :active {
+        transform: scale(1.05);
+      }
     }
   }
   .notification {

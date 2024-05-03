@@ -1,22 +1,25 @@
-import { useState } from "react";
-import styled from "@emotion/styled";
-import { simpleRequest } from "./request";
-import Box from "./components/Box";
+import { useState } from 'react';
+import styled from '@emotion/styled';
+import { simpleRequest } from './request';
+import Box from './components/Box';
 
 export default function Problem2() {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [requestList, setRequestList] = useState<string[]>([]);
   const [responseList, setResponseList] = useState<string[]>([]);
   const [isNetworkError, setIsNetworkError] = useState(false);
 
+  const [loadingList, setLoadingList] = useState<string[]>([]);
+
   const _onClickRequest = async () => {
     if (inputValue.length < 1) {
-      setRequestList([...requestList, "Ping"]);
+      setRequestList([...requestList, 'Ping']);
     } else {
       setRequestList([...requestList, inputValue]);
     }
+    setLoadingList((prev) => [...prev, 'loading...']);
 
-    setInputValue("");
+    setInputValue('');
 
     const result = await simpleRequest(inputValue);
 
@@ -25,6 +28,7 @@ export default function Problem2() {
     }
     setIsNetworkError(false);
     setResponseList((state) => [...state, result]);
+    setLoadingList((prev) => prev.slice(0, -1));
   };
 
   const _onClickReset = () => {
@@ -63,7 +67,7 @@ export default function Problem2() {
       </div>
       <div className="request__response">
         <Box title="요청" list={requestList} />
-        <Box title="응답" list={responseList} />
+        <Box title="응답" list={[...responseList, ...loadingList]} />
       </div>
     </Problem2Style>
   );
@@ -96,7 +100,10 @@ const Problem2Style = styled.div`
     .request__input__box {
       height: 30px;
       input {
+        padding: 4px 10px;
         height: 20px;
+        border-radius: 8px;
+        border: 1px solid gray;
       }
       button {
         margin-left: 8px;

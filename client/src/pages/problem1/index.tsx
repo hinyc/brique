@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Viewer } from './components/viewer';
 import { lineCalculator } from './util';
 import PageNation from './components/pagenation';
+import FileInput from './components/fileInput';
 
 export default function Problem1() {
   const [csvData, setCsvData] = useState<string[][]>([]);
@@ -68,7 +69,7 @@ export default function Problem1() {
           </strong>
         </p>
         <div className="selectFile">
-          <input type="file" onChange={_onChange} />
+          <FileInput onChange={_onChange} />
         </div>
 
         {csvData.length > 0 && (
@@ -108,10 +109,8 @@ const Problem1Style = styled.div`
   flex-direction: column;
   align-items: center;
   .selectFile {
-    width: 120px;
-    input {
-      margin: auto;
-    }
+    margin: 10px;
+    width: 400px;
   }
   .calculate {
     border-top: 2px dashed lightgray;
@@ -138,7 +137,7 @@ const Problem1Style = styled.div`
         span {
           :last-of-type {
             font-weight: 700;
-            color: #284da7;
+            color: #00456f;
           }
         }
       }
