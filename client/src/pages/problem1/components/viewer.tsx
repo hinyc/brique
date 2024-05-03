@@ -1,5 +1,5 @@
-import { lineCalculator } from '../util';
-import styled from '@emotion/styled';
+import { lineCalculator } from "../util";
+import styled from "@emotion/styled";
 
 interface ViewerProps {
   range: { start: number; end: number };
@@ -21,27 +21,29 @@ export const Viewer = (props: ViewerProps) => {
       </div>
 
       <div className="list">
-        {props.csvData.slice(props.range.start, props.range.end).map((data, index) => {
-          {
-            /* {props.csvData.map((data, index) => { */
-          }
-          const calc = lineCalculator(data);
+        {props.csvData
+          .slice(props.range.start, props.range.end)
+          .map((data, index) => {
+            {
+              /* {props.csvData.map((data, index) => { */
+            }
+            const calc = lineCalculator(data);
 
-          if (calc.error) {
-            return;
-          }
+            if (calc.error) {
+              return;
+            }
 
-          return (
-            <div key={index} className="group">
-              <span>{calc.min}</span>
-              <span>{calc.max}</span>
-              <span>{calc.sum}</span>
-              <span>{calc.avg}</span>
-              <span className="std">{calc.std}</span>
-              <span>{calc.median}</span>
-            </div>
-          );
-        })}
+            return (
+              <div key={index} className="group">
+                <span>{calc.min}</span>
+                <span>{calc.max}</span>
+                <span>{calc.sum}</span>
+                <span>{calc.avg}</span>
+                <span className="std">{calc.std}</span>
+                <span>{calc.median}</span>
+              </div>
+            );
+          })}
       </div>
     </ViewerStyle>
   );

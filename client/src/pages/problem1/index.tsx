@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // import ProblemBox from '../../components/ProblemBox';
-import styled from '@emotion/styled';
-import { Viewer } from './components/viewer';
-import { lineCalculator } from './util';
-import PageNation from './components/pagenation';
+import styled from "@emotion/styled";
+import { Viewer } from "./components/viewer";
+import { lineCalculator } from "./util";
+import PageNation from "./components/pagenation";
 
 export default function Problem1() {
   const [csvData, setCsvData] = useState<string[][]>([]);
@@ -31,8 +31,8 @@ export default function Problem1() {
 
     //비교적 간결하게 csv 데이터 확인이 가능함
     const data = await file.text();
-    const result = data.split('\r\n').map((item) => {
-      return item.split(',');
+    const result = data.split("\r\n").map((item) => {
+      return item.split(",");
     });
 
     //첫번째 배열은 데이터가 아니라 제외

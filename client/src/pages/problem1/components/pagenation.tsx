@@ -1,15 +1,20 @@
-import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useState } from 'react';
+import styled from "@emotion/styled";
+import React, { useCallback, useEffect, useState } from "react";
 
 interface PageNationProps {
   size: number;
   totalItems: number;
-  setRange: React.Dispatch<React.SetStateAction<{ start: number; end: number }>>;
+  setRange: React.Dispatch<
+    React.SetStateAction<{ start: number; end: number }>
+  >;
 }
 
 export default function PageNation(props: PageNationProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const pages = Array.from({ length: Math.ceil(props.totalItems / props.size) }, (_, i) => i + 1);
+  const pages = Array.from(
+    { length: Math.ceil(props.totalItems / props.size) },
+    (_, i) => i + 1,
+  );
 
   const pageChanger = useCallback((page: number) => {
     props.setRange({
@@ -32,7 +37,9 @@ export default function PageNation(props: PageNationProps) {
           </button>
         ))}
       </div>
-      <span className="notification">*좌우 스크롤을 통해 페이지를 선택하세요.</span>
+      <span className="notification">
+        *좌우 스크롤을 통해 페이지를 선택하세요.
+      </span>
     </PageNationStyle>
   );
 }

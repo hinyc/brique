@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import styled from '@emotion/styled';
-import { simpleRequest } from './request';
-import Box from './components/Box';
+import { useState } from "react";
+import styled from "@emotion/styled";
+import { simpleRequest } from "./request";
+import Box from "./components/Box";
 
 export default function Problem2() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [requestList, setRequestList] = useState<string[]>([]);
   const [responseList, setResponseList] = useState<string[]>([]);
   const [isNetworkError, setIsNetworkError] = useState(false);
 
   const _onClickRequest = async () => {
     if (inputValue.length < 1) {
-      setRequestList([...requestList, 'Ping']);
+      setRequestList([...requestList, "Ping"]);
     } else {
       setRequestList([...requestList, inputValue]);
     }
 
-    setInputValue('');
+    setInputValue("");
 
     const result = await simpleRequest(inputValue);
 
@@ -39,9 +39,13 @@ export default function Problem2() {
       <p>
         비동기식 요청/응답구현, express server(TCP) 사용.
         <br />
-        <strong>'root/server'위치에서 node app.js 실행 후 확인 가능합니다.</strong>
+        <strong>
+          'root/server'위치에서 node app.js 실행 후 확인 가능합니다.
+        </strong>
         <br />
-        {isNetworkError && <span className="error">네트워크 에러(500)가 발생했습니다.</span>}
+        {isNetworkError && (
+          <span className="error">네트워크 에러(500)가 발생했습니다.</span>
+        )}
       </p>
       <div className="action__box">
         <div className="request__input__box">

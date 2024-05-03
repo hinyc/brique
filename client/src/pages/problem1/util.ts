@@ -14,7 +14,7 @@ export const lineCalculator = (data: string[]) => {
     const number = Number(item);
 
     if (isNaN(number)) {
-      error.push(item.replace(/"/g, ''));
+      error.push(item.replace(/"/g, ""));
       return NaN;
     }
 
@@ -38,7 +38,10 @@ export const lineCalculator = (data: string[]) => {
 
   const avg = round(avgNumber);
   //표준편차
-  const std = Math.sqrt(line.reduce((acc, cur) => acc + Math.pow(cur - avgNumber, 2), 0) / line.length);
+  const std = Math.sqrt(
+    line.reduce((acc, cur) => acc + Math.pow(cur - avgNumber, 2), 0) /
+      line.length,
+  );
 
   //중간값, 총 10개의 값중 5,6번째 값의 평균
   const sorted = line.sort((a, b) => a - b);
@@ -56,8 +59,8 @@ export const lineCalculator = (data: string[]) => {
 
 //소수점 첫째자리 최소 0표기
 export const round = (num: number) => {
-  if (!String(num).split('.')[1]) {
-    return String(num) + '.0';
+  if (!String(num).split(".")[1]) {
+    return String(num) + ".0";
   }
   return num;
 };
