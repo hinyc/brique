@@ -19,12 +19,16 @@ export type EmployeesType = {
 
 export default function Problem3() {
   const [employees, setEmployees] = useState<EmployeesType[]>([]);
+  const [isNetworkError, setIsNetworkError] = useState(false);
 
-  //mysq12 설치
+  //mysql2 설치
   //db 접속
 
   const _onClickRequestEmployees = async () => {
     requestEmployees().then((data) => {
+      if (data.status === 500) {
+        return setIsNetworkError(true);
+      }
       if (data) {
         setEmployees(data);
       }
@@ -34,10 +38,24 @@ export default function Problem3() {
   return (
     <Problem3Style>
       <h2>문제3</h2>
-      <button onClick={_onClickRequestEmployees}>click</button>
+      <p>
+        2000년 이후 고용된 직원의 정보를 출력(Mariadb 사용)
+        <br />
+        <strong>'root/server'위치에서 node app.js 실행 후 확인 가능합니다.</strong>
+        <br />
+        {isNetworkError && <span className="error">네트워크 에러(500)가 발생했습니다.</span>}
+      </p>
+      <button onClick={_onClickRequestEmployees}>정보 요청</button>
       <Table columns={columns} employees={employees} />
+      <div className="total">{employees.length} row in set</div>
     </Problem3Style>
   );
 }
 
-const Problem3Style = styled.div``;
+const Problem3Style = styled.div`
+  .total {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+  }
+`;

@@ -20,7 +20,12 @@ export default function Table(props: TableProps) {
       </thead>
 
       <tbody>
-        {props.employees.map((employee, index) => {
+        {props.employees.length === 0 && (
+          <tr className="empty">
+            <th colSpan={columns.length}>No data</th>
+          </tr>
+        )}
+        {props.employees?.map((employee, index) => {
           return <TableTr key={index} employee={employee} columns={columns} />;
         })}
       </tbody>
@@ -29,8 +34,27 @@ export default function Table(props: TableProps) {
 }
 
 const TableStyle = styled.table`
-  th {
-    padding: 0 10px;
-    text-align: right;
+  thead {
+    th {
+      background-color: grey;
+      color: #fff;
+      font-weight: 700;
+      padding: 4px 12px;
+      text-align: right;
+    }
+  }
+
+  tbody {
+    .empty {
+      th {
+        padding: 60px;
+        text-align: center;
+        border: 1px solid lightgray;
+      }
+    }
+    th {
+      padding: 0 12px;
+      text-align: right;
+    }
   }
 `;
