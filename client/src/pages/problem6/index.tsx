@@ -38,6 +38,7 @@ export default function Problem6() {
   };
 
   const _onClickSolveProblem2 = () => {
+    // input 값의 배열을 받아서, 거꾸로 반복문을 실행시킨다
     setIsLoading(true);
     const result: number[] = [];
 
@@ -69,7 +70,40 @@ export default function Problem6() {
   return (
     <Problem6Style>
       <h2>문제 6, 신호 수신 탑</h2>
+
+      <div className="value__box">
+        <p className="inputValue">
+          <span>Input:</span>[ {inputArray.join(', ')} ]
+        </p>
+        <p className="outputValue">
+          <span>Output:</span>[ {result.join(', ')} ]
+        </p>
+      </div>
+      <div className="button__box">
+        <button disabled={isLoading} onClick={_onClickSolveProblem}>
+          Solve1
+        </button>
+        <button disabled={isLoading} onClick={_onClickSolveProblem2}>
+          Solve2
+        </button>
+      </div>
+      <div className="set__input__box">
+        <h4>Input data 변경</h4>
+        <div>
+          <input
+            type="text"
+            value={inputValueArray.join(', ')}
+            onChange={(e) => _onChangeInputValue(e, setInputValueArray)}
+            onKeyDown={(e) =>
+              _onKeyPressInputValue(e, inputValueArray, setInputValueArray)
+            }
+          />
+          <button onClick={_onClickSetInput}> Set Input</button>
+        </div>
+      </div>
+
       <p>
+        <h4>Solve1</h4>
         1. input 값의 배열을 받아서, 거꾸로 반복문을 실행시킨다 <br />
         2. 이중 반복문을 통해 현재 값보다 낮은 인덱스 값들중, 현재 값보다
         큰값이면서 인덱스가 가장 큰값을 찾는다. <br />
@@ -77,31 +111,10 @@ export default function Problem6() {
         4. 없으면 0을 결과 배열에 unshift 한다. <br />
         5. 결과 배열을 반환한다.
         <br />
+        <h4>Solve2</h4>
+        1. 배열을 뒤집어 findIndex를 사용하여 인덱스를 찾는다. <br />
+        2. 원본 인덱스를 계산하여 배열을 만든다.
       </p>
-      <div>
-        <input
-          type="text"
-          value={inputValueArray.join(', ')}
-          onChange={(e) => _onChangeInputValue(e, setInputValueArray)}
-          onKeyDown={(e) =>
-            _onKeyPressInputValue(e, inputValueArray, setInputValueArray)
-          }
-        />
-        <button onClick={_onClickSetInput}> Set Input</button>
-      </div>
-      <div>
-        <button disabled={isLoading} onClick={_onClickSolveProblem}>
-          Solve
-        </button>
-        <button disabled={isLoading} onClick={_onClickSolveProblem2}>
-          Solve2
-        </button>
-      </div>
-
-      <div>
-        <p>Input: [{inputArray.join(', ')}]</p>
-        <p>Output: [{result.join(', ')}]</p>
-      </div>
     </Problem6Style>
   );
 }
@@ -111,13 +124,57 @@ const Problem6Style = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  input {
-    text-align: center;
-    padding: 8px 16px;
-    font-size: 14px;
-    width: 600px;
-  }
   p {
     text-align: left;
+  }
+  .value__box {
+    p {
+      font-weight: 700;
+      span {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 4px;
+        font-size: 12px;
+      }
+      &.inputValue {
+        color: blue;
+      }
+      &.outputValue {
+        color: red;
+      }
+    }
+  }
+  .button__box {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    button {
+      width: 160px;
+    }
+  }
+
+  .set__input__box {
+    margin-top: 20px;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      input {
+        text-align: center;
+        padding: 8px 16px;
+        font-size: 12px;
+        width: 600px;
+        border-radius: 8px;
+        border: 1px solid gray;
+        :focus {
+          outline: none;
+        }
+      }
+      button {
+        margin-left: 16px;
+      }
+    }
   }
 `;
