@@ -40,17 +40,6 @@ export default function Home() {
           <div className="box">
             <h3>프로젝트 실행</h3>
             node v20.9.0 / npm v10.6.0
-            <h4>Client</h4>
-            <ol>
-              <li>npm install</li>
-              <li>
-                .env 환경변수 추가(Api host)
-                <ul>
-                  <li>VITE_API_URL= http://localhost:3000</li>
-                </ul>
-              </li>
-              <li>npm run dev</li>
-            </ol>
             <h4>sever</h4>
             <ol>
               <li>npm install</li>
@@ -65,6 +54,17 @@ export default function Home() {
                 </ul>
               </li>
               <li>node app.js</li>
+            </ol>
+            <h4>Client</h4>
+            <ol>
+              <li>npm install</li>
+              <li>
+                .env 환경변수 추가(Api host)
+                <ul>
+                  <li>VITE_API_URL= http://localhost:3000</li>
+                </ul>
+              </li>
+              <li>npm run dev</li>
             </ol>
           </div>
         </div>
