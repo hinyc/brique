@@ -9,6 +9,7 @@ const { getPingPong } = require('./controller');
 const app = express();
 const port = 3000;
 
+// CORS 에러 해결
 app.use(cors());
 
 const connection = mysql.createConnection({
@@ -29,8 +30,6 @@ connection.connect((err) => {
 //timeout memory관리 필요.
 // const timeoutArray = [];
 
-// CORS 에러 해결
-
 // app.use((req, res, next) => {
 //   console.log(req, `${req.method} ${req.path}`);
 //   next();
@@ -41,13 +40,15 @@ app.get('/', getPingPong);
 
 //문제3 용
 app.get('/employees', (req, res) => {
-  connection.query('SELECT * FROM employees WHERE hire_date >= "2000-01-01"', (error, results) => {
+  // 서버시간(UTC-9) 기준 => UTC 1999-12-31T15:00:00.000Z
+  connection.query('SELECT * FROM employees WHERE hire_date >= ? ', ['2000-01-01'], (error, results) => {
     if (error) {
       console.error('Error:', error);
       res.status(500).send('Internal Server Error');
       return;
     }
 
+    console.log(results);
     //병렬 비동기 실행 emp_no가지고 데이터를 추가시킨다.
     const promises = results.map((result) => {
       return new Promise((resolve, reject) => {
