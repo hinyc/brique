@@ -14,16 +14,15 @@ export default function Chart() {
 
   const keys = Object.keys(chartData[0]);
 
-  console.log(keys);
-  console.log(chartData);
   return (
     <>
       <LineChart width={500} height={300} data={chartData}>
         <XAxis dataKey={keys[0]} />
         <YAxis
           yAxisId="left"
+          domain={[0, 40]}
           label={{
-            value: '평균 기온(℃)',
+            value: '평균 기온( ℃ )',
             angle: -90,
             position: 'insideLeft',
             offset: 20
@@ -32,8 +31,9 @@ export default function Chart() {
         <YAxis
           yAxisId="right"
           orientation="right"
+          domain={[20, 100]}
           label={{
-            value: '평균 습도(%)',
+            value: '평균 습도( % )',
             angle: -90,
             position: 'insideRight',
             offset: 20
@@ -48,6 +48,7 @@ export default function Chart() {
           dataKey={keys[1]}
           name="평균 기온"
           stroke="#8884d8"
+          strokeWidth={2}
         />
         <Line
           yAxisId="right"
@@ -55,6 +56,7 @@ export default function Chart() {
           dataKey={keys[2]}
           name="평균 습도"
           stroke="#82ca9d"
+          strokeWidth={2}
         />
       </LineChart>
     </>

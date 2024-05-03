@@ -10,6 +10,7 @@ export type ChartDataType = {
 interface IStore {
   chartData: ChartDataType[];
   setChartData: (index: number, key: 'temp' | 'humi', value: number) => void;
+  setChartDataRandom: () => void;
 }
 
 const useStore4 = create<IStore>((set) => ({
@@ -32,6 +33,16 @@ const useStore4 = create<IStore>((set) => ({
     set((state) => {
       const newData = [...state.chartData];
       newData[index][key === 'temp' ? 'temperature' : 'humidity'] = value;
+      return { chartData: newData };
+    }),
+  setChartDataRandom: () =>
+    set((state) => {
+      //random data 범위는 온도 0~40, 습도 20~100
+      const newData = state.chartData.map((data) => ({
+        ...data,
+        temperature: Math.floor(Math.random() * 40),
+        humidity: Math.floor(Math.random() * 80) + 20
+      }));
       return { chartData: newData };
     })
 }));
