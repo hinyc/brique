@@ -2,6 +2,7 @@
 node v20.9.0 / npm v10.6.0
 
 ### Sever
+- /sever 경로로 이동
 - npm install
 - .env 환경변수 추가
 (MariaDB 사용시 필요)
@@ -12,6 +13,7 @@ node v20.9.0 / npm v10.6.0
 - node app.js (server 폴더에서)
 
 ### Client
+- /clinet 경로로 이동
 - npm install
 - .env 환경변수 추가(Api host)
 VITE_API_URL= http://localhost:3000
