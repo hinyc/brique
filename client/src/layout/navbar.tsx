@@ -21,7 +21,7 @@ const NavBarStyle = styled.div`
   justify-content: center;
   gap: 24px;
   margin-bottom: 20px;
-  width: 650px;
+  width: 820px;
   a {
     padding: 4px 16px;
     color: #000;

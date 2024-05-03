@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { EmployeesType } from "..";
-import { ColumnsType, columns } from "../constant";
-import TableTr from "./Table.Tr";
+import styled from '@emotion/styled';
+import { EmployeesType } from '..';
+import { ColumnsType, columns } from '../constant';
+import TableTr from './Table.Tr';
 
 export interface TableProps {
   columns: ColumnsType[];
