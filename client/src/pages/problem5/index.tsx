@@ -50,7 +50,7 @@ export default function Problem5() {
         });
 
         setTotal((prev) => {
-          //실행 횟수
+          //실행 횟수가 리미트에 도달하면 멈춤, 인터벌 해제
           if (prev + 1 >= limitCall) {
             clearInterval(interval);
             setIsLoading(false);
@@ -63,8 +63,10 @@ export default function Problem5() {
   };
 
   const _onClickGetRandomResponse = () => {
+    //응답중 일경우 중복 호출 방지
     if (isLoading) return;
 
+    //100개 리스트가 있는데 재호출시 초기화
     if (total >= limitCall) {
       setRandomResponseList([]);
       setTotal(0);
@@ -72,6 +74,8 @@ export default function Problem5() {
     }
 
     setIsLoading(true);
+
+    // 연속 호출
     const interval = setInterval(() => {
       callGetRandomResponse(interval);
     }, intervalTime);
