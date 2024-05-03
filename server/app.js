@@ -50,7 +50,6 @@ app.get('/employees', (req, res) => {
       return;
     }
 
-    console.log(results);
     //병렬 비동기 실행 emp_no가지고 데이터를 추가시킨다.
     const promises = results.map((result) => {
       return new Promise((resolve, reject) => {

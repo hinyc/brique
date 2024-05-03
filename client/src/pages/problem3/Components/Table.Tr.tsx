@@ -27,5 +27,29 @@ export default function TableTr(props: TableTrProps) {
 const TrStyle = styled.tr`
   th {
     border: 1px solid lightgray;
+    :first-of-type {
+      width: 52px;
+    }
+    :nth-of-type(2) {
+      width: 72px;
+    }
+    :nth-of-type(3) {
+      width: 70px;
+    }
+    :nth-of-type(4) {
+      width: 43px;
+    }
+    :nth-of-type(5) {
+      width: 75px;
+    }
+    :nth-of-type(6) {
+      width: 125px;
+    }
+    :nth-of-type(7) {
+      width: 96px;
+    }
+    :last-of-type {
+      width: 70px;
+    }
   }
 `;

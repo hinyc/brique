@@ -7,7 +7,7 @@ export default function Problem6() {
   const [result, setResult] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [inputValueArray, setInputValueArray] = useState<string[]>(['2', '3']);
+  const [inputValueArray, setInputValueArray] = useState<string[]>([]);
 
   const _onClickSolveProblem = () => {
     setIsLoading(true);

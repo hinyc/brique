@@ -20,17 +20,20 @@ export type EmployeesType = {
 export default function Problem3() {
   const [employees, setEmployees] = useState<EmployeesType[]>([]);
   const [isNetworkError, setIsNetworkError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //mysql2 설치
   //db 접속
 
   const _onClickRequestEmployees = async () => {
+    setIsLoading(true);
     requestEmployees().then((data) => {
       if (data.status === 500) {
         return setIsNetworkError(true);
       }
       if (data) {
         setEmployees(data);
+        setIsLoading(false);
       }
     });
   };
@@ -51,7 +54,7 @@ export default function Problem3() {
       </p>
       <button onClick={_onClickRequestEmployees}>정보 요청</button>
       <div>
-        <Table columns={columns} employees={employees} />
+        <Table columns={columns} employees={employees} isLoading={isLoading} />
         <div className="total">{employees.length} row in set</div>
       </div>
     </Problem3Style>
