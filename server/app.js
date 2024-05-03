@@ -4,10 +4,12 @@ require('dotenv').config();
 
 //mariaDB
 const mysql = require('mysql2');
-const { getPingPong } = require('./controller');
+const { getPingPong, getRandomResponse } = require('./controller');
 
 const app = express();
 const port = 3000;
+
+let fetch;
 
 // CORS 에러 해결
 app.use(cors());
@@ -143,6 +145,9 @@ app.get('/employees', (req, res) => {
 //필요 title 직급
 //필요 max_salary 최대급여
 //  birth_date: 생일 , 불필요
+
+//문제 5용
+app.get('/random', getRandomResponse);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
