@@ -62,6 +62,7 @@ export default function Chart() {
           name="평균 기온"
           stroke="#0366d3"
           strokeWidth={2}
+          dot={false}
         />
         <Line
           yAxisId="right"
@@ -70,6 +71,7 @@ export default function Chart() {
           name="평균 습도"
           stroke="#f31300"
           strokeWidth={2}
+          dot={false}
         />
       </LineChart>
     </>
