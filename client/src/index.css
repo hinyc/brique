@@ -43,6 +43,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   transition: border-color 0.25s;
 }
 button:active {

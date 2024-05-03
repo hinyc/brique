@@ -53,6 +53,9 @@ export default function Problem3() {
 }
 
 const Problem3Style = styled.div`
+  button {
+    margin-bottom: 10px;
+  }
   .total {
     font-size: 16px;
     font-weight: 500;
