@@ -80,7 +80,15 @@ export default function Problem5() {
   return (
     <Problem5Style>
       <h2>Problem5</h2>
-
+      <p>
+        접속 주소 client가 직접 요청하지 않고 local 서버를 우회하여 가져옵니다
+        (CORS 우회).
+        <br />
+        <strong>
+          'root/server'위치에서 node app.js 실행 후 확인 가능합니다.
+        </strong>
+        <br />
+      </p>
       <button disabled={isLoading} onClick={_onClickGetRandomResponse}>
         {total >= limitCall ? 'Reset' : 'GetRandomResponse'}
       </button>
