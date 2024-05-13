@@ -11,24 +11,24 @@ export default function Problem2() {
 
   const [loadingList, setLoadingList] = useState<string[]>([]);
 
-  const _onClickRequest = async () => {
+  const _onClickRequest = () => {
     if (inputValue.length < 1) {
       setRequestList([...requestList, 'Ping']);
     } else {
       setRequestList([...requestList, inputValue]);
     }
-    setLoadingList((prev) => [...prev, 'loading...']);
 
     setInputValue('');
+    setLoadingList((prev) => [...prev, 'loading...']);
 
-    const result = await simpleRequest(inputValue);
-
-    if (result.status === 500) {
-      return setIsNetworkError(true);
-    }
-    setIsNetworkError(false);
-    setResponseList((state) => [...state, result]);
-    setLoadingList((prev) => prev.slice(0, -1));
+    simpleRequest(inputValue).then((result) => {
+      if (result.status === 500) {
+        return setIsNetworkError(true);
+      }
+      setIsNetworkError(false);
+      setResponseList((state) => [...state, result]);
+      setLoadingList((prev) => prev.slice(0, -1));
+    });
   };
 
   const _onClickReset = () => {
